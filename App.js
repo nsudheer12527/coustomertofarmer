@@ -1,21 +1,58 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+// App.js
 
-export default function App() {
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
+import Login from './components/login';
+import Signup from './components/signup';
+import Dashboard from './components/dashboard';
+
+
+const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function MyStack() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Drawer.Navigator
+      >
+      <Drawer.Screen 
+        name="Signup" 
+        component={Signup} 
+        options={{ title: 'Signup' }}
+      />       
+      <Drawer.Screen
+        name="Login" 
+        component={Login} 
+        options={
+          {title: 'Login'},
+          {headerLeft: null} 
+        }
+      />
+      <Drawer.Screen
+       name="Dashboard" 
+       component={Dashboard} 
+       
+      />
+      
+      </Drawer.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  return (
+    <NavigationContainer>
+       <Drawer.Navigator
+        drawerContentOptions={{
+          activeTintColor: '#e91e63',
+          itemStyle: { marginVertical: 5 },
+        }}>
+          <Drawer.Screen
+          name="Mystack"
+          options={{ drawerLabel: 'HOME' }}
+          component={MyStack} />
+          </Drawer.Navigator>
+    </NavigationContainer>
+  );
+}
